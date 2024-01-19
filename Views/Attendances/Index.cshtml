@@ -1,0 +1,66 @@
+﻿@model IEnumerable<Kindergaten.Models.ViewModel.ChildAttendanceViewModel>
+
+@{
+    ViewData["Title"] = "Attendance Summary";
+}
+
+<h1>Attendance Summary</h1>
+
+<a asp-action="Edit">Today attendance</a>
+
+<form method="get" action="@Url.Action("Index", "Attendances")">
+    <label for="year">Year:</label>
+    <input type="number" id="year" name="year" min="2010" max="2024" value="@ViewBag.SelectedYear" />
+
+    <label for="month">Month:</label>
+    <select id="month" name="month">
+        @foreach (var m in ViewBag.Months)
+        {
+            <option value="@m" selected="@((string)ViewBag.SelectedMonth == m)">
+                @m
+            </option>
+        }
+    </select>
+
+    <label for="classId">Group:</label>
+    <select id="classId" name="classId">
+        <option value="">All Groups</option>
+        @foreach (var c in ViewBag.Classes)
+        {
+            <option value="@c.ClassID" selected="@((int?)ViewBag.SelectedClass == c.ClassID)">
+                @c.ClassName
+            </option>
+        }
+    </select>
+
+    <button type="submit">Apply Filter</button>
+</form>
+
+
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayName("Child Name")
+            </th>
+            <th>
+                @Html.DisplayName("Total Attendances")
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var child in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => child.FullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => child.TotalAttendancesThisMonth)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

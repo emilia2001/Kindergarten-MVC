@@ -1,0 +1,46 @@
+﻿@model Child
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div>
+    <h4>Child</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FirstName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.LastName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DateOfBirth)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DateOfBirth)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ParentContact)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ParentContact)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Class)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Class.ClassName)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.ChildID">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

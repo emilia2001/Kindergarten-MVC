@@ -1,0 +1,87 @@
+﻿@model Kindergaten.Models.ViewModel.ActivityClassIndexData
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Activities</h1>
+
+<p>
+    <a asp-action="Create">Add activity</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Start date and time
+            </th>
+            <th>
+                Duration
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Activities) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.KActivityName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Time)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.KActivityID">Edit</a> |
+                <a asp-action="Delete" asp-route-id="@item.KActivityID">Delete</a> |
+                <a asp-action="Index" asp-route-id="@item.KActivityID">Enrolled Groups</a>
+
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+@if (Model.Classes != null)
+{
+    if (Model.Classes.Count() == 0)
+    {
+        <h3>No enrolled groups</h3>
+    }
+    else
+    {
+        <h3>Enrolled groups</h3>
+        <table class="table">
+            <tr>
+                <th>Name</th>
+                <th>Teacher</th>
+                <th>Capacity</th>
+            </tr>
+            @foreach (var item in Model.Classes)
+            {
+                string selectedRow = "";
+                if (item.ClassID == (int?)ViewData["KActivityID"])
+                {
+                    selectedRow = "success";
+                }
+                <tr class="@selectedRow">
+                    <td>
+                        @item.ClassName
+                    </td>
+                    <td>
+                        @item.Teacher.FullName
+                    </td>
+                    <td>
+                        @item.Capacity
+                    </td>
+                </tr>
+            }
+        </table>
+    }
+    
+}

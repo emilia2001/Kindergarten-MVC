@@ -1,0 +1,49 @@
+﻿@model IEnumerable<Child>
+
+@{
+    ViewData["Title"] = "Day Attendance";
+}
+
+<h1>Edit Attendance</h1>
+
+<form method="get" action="@Url.Action("Edit", "Attendances")">
+    <label for="classId">Group:</label>
+    <select id="classId" name="classId">
+        <option value="">All Classes</option>
+        @foreach (var c in ViewBag.Classes)
+        {
+            <option value="@c.ClassID" selected="@((int?)ViewBag.SelectedClass == c.ClassID)">
+                @c.ClassName
+            </option>
+        }
+    </select>
+
+    <button type="submit">Apply Filter</button>
+</form>
+
+<form asp-action="Edit">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Child Name</th>
+                <th>Present</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var child in Model)
+            {
+                <tr>
+                    <td>@child.FullName</td>
+                    <td>
+                        <input type="checkbox" name="childIds" value="@child.ChildID"
+                        @(child.Attendances.Any(att => att.Date.Year == DateTime.Now.Year && att.Date.Month == DateTime.Now.Month && att.Date.Day == DateTime.Now.Day && att.PresentStatus) ? "checked disabled" : "") />
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div class="form-group">
+        <input type="submit" value="Save" class="btn btn-primary" />
+    </div>
+</form>

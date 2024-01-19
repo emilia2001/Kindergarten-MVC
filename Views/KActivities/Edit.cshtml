@@ -1,0 +1,66 @@
+﻿@model KActivity
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit activity information</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="KActivityID" />
+            <div class="form-group">
+                <label asp-for="KActivityName" class="control-label"></label>
+                <input asp-for="KActivityName" class="form-control" />
+                <span asp-validation-for="KActivityName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Date" class="control-label"></label>
+                <input asp-for="Date" class="form-control" />
+                <span asp-validation-for="Date" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Time" class="control-label"></label>
+                <input asp-for="Time" class="form-control" />
+                <span asp-validation-for="Time" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <table>
+                        <th colspan="2">
+                            Enrolled groups
+                        </th>
+                         @{
+                            int cnt = 0;
+                            List<Kindergaten.Models.ViewModel.EnrolledClassData> classes = ViewBag.Classes;
+                            foreach (var c in classes)
+                            {
+                                @:<tr><td>
+                                    <input type="checkbox"
+                                        name="enrolledClasses"
+                                        value="@c.ClassID"
+                                        @(Html.Raw(c.IsEnrolled ? "checked=\"checked\"" : "")) />
+                                    @c.Name @: @c.Capacity
+                                @:</td></tr>
+                            }
+                        }
+                    </table>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
